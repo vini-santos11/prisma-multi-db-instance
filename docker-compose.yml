@@ -3,10 +3,12 @@ services:
     image: bitnami/postgresql:latest
     container_name: db_host
     environment:
-      - POSTGRESQL_USERNAME=root
-      - POSTGRESQL_PASSWORD=root
+      - POSTGRESQL_USERNAME=app
+      - POSTGRESQL_PASSWORD=app
       - POSTGRESQL_DATABASE=db_host
     ports:
       - 5439:5432
     cpu_shares: 512
     mem_limit: 512M
+    volumes:
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh

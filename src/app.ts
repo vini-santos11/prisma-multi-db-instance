@@ -1,6 +1,7 @@
 import fastify, { FastifyReply, FastifyRequest } from "fastify";
 import cors from "@fastify/cors"
 import { createPrismaClient } from "./lib/prisma";
+import { changeDBName } from "./helpers/change-db-name";
 
 export const app = fastify();
 
@@ -9,9 +10,9 @@ app.decorateRequest("prisma", null);
 app.addHook('onRequest', async (request: FastifyRequest, reply: FastifyReply) => {
     let tenantId = request.headers['x-tenant-id'] as string;
     if(tenantId == null) 
-        tenantId = "db_host"
+        tenantId = "host"
 
-    const databaseUrl = `postgresql://root:root@localhost:5439/${tenantId}`
+    const databaseUrl = changeDBName("db_" + tenantId);
  
     request.prisma = createPrismaClient(databaseUrl);
 })
