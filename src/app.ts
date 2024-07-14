@@ -9,8 +9,8 @@ app.decorateRequest("prisma", null);
 
 app.addHook('onRequest', async (request: FastifyRequest, reply: FastifyReply) => {
     let tenantId = request.headers['x-tenant-id'] as string;
-    if(tenantId == null) 
-        tenantId = "host"
+    
+    if(tenantId == null) tenantId = "host"
 
     const databaseUrl = changeDBName("db_" + tenantId);
  
